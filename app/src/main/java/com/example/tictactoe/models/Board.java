@@ -1,6 +1,10 @@
 package com.example.tictactoe.models;
 
+import android.util.Log;
 import android.widget.ImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
 
@@ -37,13 +41,13 @@ public class Board {
         }
     }
 
-    public boolean playable(Cell cell) {
+    public boolean isPlayable(Cell cell) {
         return cell.getImageView().getDrawable() == null;
     }
 
     public void play(Cell cell) {
 
-        if (!playable(cell)) {
+        if (!isPlayable(cell)) {
             return;
         }
 
@@ -135,6 +139,108 @@ public class Board {
     public void changeTurn() {
         player1.changeTurn();
         player2.changeTurn();
+    }
+
+    public Cell getNextMove(String mode) {
+        Log.d("Board", "getNextMove: " + mode);
+        if (mode.equals("Easy")) {
+            return getRandomMove();
+        } else {
+            if (mode.equals("Medium")) {
+                if (Math.random() < 0.5) {
+                    return getRandomMove();
+                }
+            }
+        }
+        return getBestMove();
+    }
+
+    private Cell getBestMove() {
+
+        Cell bestMove = null;
+        int bestScore = Integer.MIN_VALUE;
+
+        for (Cell[] row : cells) {
+            for (Cell cell : row) {
+                if (cell.getImageView().getDrawable() != null) {
+                    continue;
+                }
+
+                cell.getImageView().setImageDrawable(player2.getSymbol());
+                int score = minimax(0, false);
+                cell.getImageView().setImageDrawable(null);
+
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMove = cell;
+                }
+
+            }
+        }
+
+        return bestMove;
+    }
+
+    private Cell getRandomMove() {
+        List<Cell> availableMoves = new ArrayList<>();
+
+        for (Cell[] row : cells) {
+            for (Cell cell : row) {
+                if (cell.getImageView().getDrawable() == null) {
+                    availableMoves.add(cell);
+                }
+            }
+        }
+
+        Log.d("Board", "getRandomMove: " + availableMoves.size());
+
+        if (!availableMoves.isEmpty()) {
+            int randomIndex = (int) (Math.random() * availableMoves.size());
+            Log.d("Board", "getRandomMove: " + randomIndex);
+            return availableMoves.get(randomIndex);
+        } else {
+            return null;
+        }
+    }
+
+    private int minimax(int depth, boolean isMaximizing) {
+        if (isWinner(player1)) {
+            return -10;
+        } else if (isWinner(player2)) {
+            return 10;
+        } else if (isBoardFull()) {
+            return 0;
+        }
+
+        if (isMaximizing) {
+            int bestScore = Integer.MIN_VALUE;
+            for (Cell[] row : cells) {
+                for (Cell cell : row) {
+                    if (cell.getImageView().getDrawable() == null) {
+                        cell.getImageView().setImageDrawable(player2.getSymbol());
+                        int score = minimax(depth + 1, false);
+                        cell.getImageView().setImageDrawable(null);
+                        bestScore = Math.max(score, bestScore);
+                    }
+                }
+            }
+
+            return bestScore;
+        } else {
+            int bestScore = Integer.MAX_VALUE;
+            for (Cell[] row : cells) {
+                for (Cell cell : row) {
+                    if (cell.getImageView().getDrawable() == null) {
+                        cell.getImageView().setImageDrawable(player1.getSymbol());
+                        int score = minimax(depth + 1, true);
+                        cell.getImageView().setImageDrawable(null);
+                        bestScore = Math.min(score, bestScore);
+                    }
+                }
+            }
+
+            return bestScore;
+        }
     }
 
     public Player getPlayer1() {

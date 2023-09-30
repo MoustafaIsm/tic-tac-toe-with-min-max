@@ -102,6 +102,30 @@ public class GameActivity extends AppCompatActivity {
 
         currentPlayer = board.getCurrentPlayer();
         tvTurn.setText(MessageFormat.format("{0}'s turn", currentPlayer.getName()));
+
+        if (currentPlayer.isComputer() && !gameDone) {
+
+            Cell bestMove = board.getNextMove(mode);
+            board.play(bestMove);
+
+            imageView = bestMove.getImageView();
+            imageView.setImageDrawable(currentPlayer.getSymbol());
+
+            if (board.isBoardFull()) {
+                tvTurn.setText(R.string.game_over);
+                setGameDone(true);
+                return;
+            }
+            if (board.isWinner(currentPlayer)) {
+                tvTurn.setText(MessageFormat.format("{0} wins!", currentPlayer.getName()));
+                setGameDone(true);
+                return;
+            }
+        }
+
+        currentPlayer = board.getCurrentPlayer();
+        tvTurn.setText(MessageFormat.format("{0}'s turn", currentPlayer.getName()));
+
     }
 
     public void onRestartClick(View view) {
