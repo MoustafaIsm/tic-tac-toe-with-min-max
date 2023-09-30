@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
+    <string name="app_logo">App Logo</string>
+    <string name="start_a_new_game">Start a new game!</string>
+    <string name="start">Start</string>
+    <string name="choose_difficulty">Choose difficulty</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="points">Points</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="empty">empty</string>
+    <string name="pvp">Player vs Player</string>
+    <array name="mode">
+        <item>@string/pvp</item>
+        <item>@string/easy</item>
+        <item>@string/medium</item>
+        <item>@string/hard</item>
+    </array>
+    <string name="top_left">0,0</string>
+    <string name="top_center">0,1</string>
+    <string name="top_right">0,2</string>
+    <string name="center_left">1,0</string>
+    <string name="center_center">1,1</string>
+    <string name="center_right">1,2</string>
+    <string name="bottom_left">2,0</string>
+    <string name="bottom_center">2,1</string>
+    <string name="bottom_right">2,2</string>
+    <string name="player_turn">Your turn</string>
+    <string name="computer_turn">Computer turn</string>
+    <string name="game_over">Game Over !!</string>
+    <string name="mode">Mode</string>
+    <string name="choose_mode">Choose Mode</string>
+    <string name="restart">Restart</string>
 </resources>
