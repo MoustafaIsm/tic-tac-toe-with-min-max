@@ -4,8 +4,8 @@ import android.widget.ImageView;
 
 public class Cell {
 
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
     private ImageView imageView;
 
     public Cell(int row, int column, ImageView imageView) {

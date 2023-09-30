@@ -8,9 +8,9 @@ import java.util.List;
 
 public class Board {
 
-    private Cell[][] cells;
-    private Player player1;
-    private Player player2;
+    private final Cell[][] cells;
+    private final Player player1;
+    private final Player player2;
 
     public Board(Player player1, Player player2, Cell[][] cells) {
         this.player1 = player1;

@@ -9,7 +9,7 @@ public class Player {
     private String name;
     private int score;
     private boolean isTurn;
-    private Drawable symbol;
+    private final Drawable symbol;
     private boolean isComputer;
 
     public Player(String name, Drawable symbol) {
